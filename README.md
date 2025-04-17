@@ -34,6 +34,12 @@ docker compose up -d
 docker compose up -d --force-recreate
 ```
 
+##### service query
+
+```sh
+docker compose ps
+```
+
 #### service stop
 
 ```sh
