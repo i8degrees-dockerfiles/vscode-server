@@ -1,0 +1,32 @@
+---
+
+networks:
+  proxy:
+    attachable: true
+    driver: overlay
+    external: true
+#volumes:
+  #python-libs:
+
+services:
+  vscode:
+    user: vscode:src
+    image: i8degrees/vscode-server:latest
+    build:
+      context: .
+      dockerfile: "Dockerfile"
+    restart: unless-stopped
+    container_name: vscode-server-1
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - /etc/passwd:/etc/passwd:ro
+      - /etc/shadow:/etc/shadow:ro
+      - /etc/group:/etc/group:ro
+    env_file:
+      ".env"
+      #".env.dist"
+    networks:
+      - proxy
+    #ports:
+    #- "22:22/tcp"
+
