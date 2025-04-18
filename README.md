@@ -3,6 +3,8 @@
 
 Visual Studio Code IDE server
 
+- [docker.fs1.home: code tunnel](http://docker.fs1.home:8010)
+
 ## usage
 
 ### bootstrap
