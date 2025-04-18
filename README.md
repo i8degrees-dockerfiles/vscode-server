@@ -61,6 +61,7 @@ docker compose logs --since=24h -f
 
 ```sh
 docker exec -it vscode-server-1 bash
+#docker exec -it vscode-server-1 sh
 ```
 
 ##### push to hub
