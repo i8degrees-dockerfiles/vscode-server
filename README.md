@@ -1,11 +1,14 @@
 
 # vscode-server
 
-Visual Studio Code IDE server
+Visual Studio Code IDE server uplink.
 
 - [docker.fs1.home: code tunnel](http://docker.fs1.home:8010)
 
 ## usage
+
+- [Remote Code Tunnels][0]
+- web UI for vscode instance
 
 ### bootstrap
 
@@ -80,7 +83,8 @@ docker compose pull
 
 ## reference documents
 
-[0]:
+[0]: https://code.visualstudio.com/docs/remote/tunnels
+[10]:
 [90]:
 [100]:
 [110]:
