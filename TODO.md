@@ -7,7 +7,10 @@
 for letting us use the `command` syntax inside of 
 `compose.yml` services along side a sane default 
 entrypoint. I believe it has something to do with
-maybe the `CMD` syntax inside `Dockerfile`.
+maybe the `CMD` syntax inside `Dockerfile`..?
+
+- [ ] determine if we need to run `code serve-web` or `code tunnel` or even
+both? shall we do so in two separate containers?
 
 - [ ] register **vscode.fs1.home**
 
