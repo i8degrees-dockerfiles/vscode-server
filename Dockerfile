@@ -7,7 +7,6 @@
 
 # https://hub.docker.com/_/debian/tags?name=12.10
 FROM debian:12.10
-#FROM debian:12.10-slim
 LABEL maintainer="Jeffrey Carpenter <1329364+i8degrees@users.noreply.github.com>"
 
 # FIXME(JEFF): Allow the end-user to choose what unprivileged user ID to use
