@@ -25,6 +25,6 @@ services:
       #".env.dist"
     networks:
       - proxy
-    #ports:
-    #- "22:22/tcp"
+    ports:
+      - "0.0.0.0:8000:127.0.0.1:8000/tcp"
 
