@@ -3,6 +3,12 @@
 
 ## TODO
 
+- [ ] figure out the `Dockerfile` reference syntax
+for letting us use the `command` syntax inside of 
+`compose.yml` services along side a sane default 
+entrypoint. I believe it has something to do with
+maybe the `CMD` syntax inside `Dockerfile`.
+
 - [ ] register **vscode.fs1.home**
 
 - [ ] try out the `debian:12.10-slim` image
