@@ -25,6 +25,9 @@ services:
       #".env.dist"
     networks:
       - proxy
+    #expose:
+    #- 8000
+    # external port:container port
     ports:
-      - "0.0.0.0:8000:127.0.0.1:8000/tcp"
+      - "8010:8000/tcp"
 
