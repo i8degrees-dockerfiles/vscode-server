@@ -10,18 +10,16 @@ networks:
 
 services:
   vscode:
-    user: vscode:src
+    user: code:src
     image: i8degrees/vscode-server:latest
     build:
       context: .
       dockerfile: "Dockerfile"
+    #command: code server
     restart: unless-stopped
     container_name: vscode-server-1
     volumes:
       - /etc/localtime:/etc/localtime:ro
-      - /etc/passwd:/etc/passwd:ro
-      - /etc/shadow:/etc/shadow:ro
-      - /etc/group:/etc/group:ro
     env_file:
       ".env"
       #".env.dist"
