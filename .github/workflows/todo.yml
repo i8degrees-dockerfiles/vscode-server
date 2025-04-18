@@ -1,10 +1,18 @@
 # actions/todo-to-issue:jeff
 #
-# *...*
+# This is an experimental (for me) TODO.md -> Github Issue 
+# action that will trigger upon (at minimum), every commit 
+# push made to this repository.
 #
+# actions/checkout@v5 introduces additional features.
+# In particular, this action will attempt to sync all 
+# changes made, such as task completion, etc end to 
+# end. A GitHub issue reference will be added below 
+# each task entry (TODO.md). Other "surprises" are surely in 
+# store for us.
+# 
 # SEE ALSO:
 # 1. https://github.com/marketplace/actions/todo-to-issue
-#
 #
 # IMPORTANT(JEFF): Note that if you set multiple triggers -- 
 # i.e. both pull_request and push -- this can result in 
