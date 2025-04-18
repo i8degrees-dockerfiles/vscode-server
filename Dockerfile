@@ -38,7 +38,7 @@ RUN echo "INFO: Adding unprivileged user 'code:src' to container..." && \
   useradd -m -s /bin/bash -G src code
 #adduser -S -D -G src vscode
 
-#EXPOSE 123/tcp
+#EXPOSE 8000/tcp
 
 #USER root
 #WORKDIR /root
@@ -46,5 +46,6 @@ RUN echo "INFO: Adding unprivileged user 'code:src' to container..." && \
 
 USER code
 WORKDIR /home/code
-ENTRYPOINT ["/usr/bin/code", "server" ]
+ENTRYPOINT ["/usr/bin/code", "tunnel" ]
+CMD ["/usr/bin/code", "serve-web" ]
 
