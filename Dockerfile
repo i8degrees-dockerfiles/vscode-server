@@ -10,6 +10,11 @@ FROM debian:12.10
 #FROM debian:12.10-slim
 LABEL maintainer="Jeffrey Carpenter <1329364+i8degrees@users.noreply.github.com>"
 
+# FIXME(JEFF): Allow the end-user to choose what unprivileged user ID to use
+# in building this image.
+#ENV 
+#USERID=code
+
 USER root
 WORKDIR /root
 
@@ -28,9 +33,18 @@ COPY --chmod=+x --chown=root:root \
 RUN echo "INFO: Executing /build.sh..." && \
   sh -c '/build.sh'
 
-# NOTE(JEFF): user addition
-RUN echo "INFO: Adding unprivileged user 'vscode:src' to container..." \
-  adduser -S -D -G src vscode
+# NOTE(JEFF): create "code" user
+RUN echo "INFO: Adding unprivileged user 'code:src' to container..." && \
+  useradd -m -s /bin/bash -G src code
+#adduser -S -D -G src vscode
 
 #EXPOSE 123/tcp
+
+#USER root
+#WORKDIR /root
+#ENTRYPOINT ["/usr/bin/code", "server", "--no-sandbox" ]
+
+USER code
+WORKDIR /home/code
 ENTRYPOINT ["/usr/bin/code", "server" ]
+
