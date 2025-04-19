@@ -9,20 +9,25 @@ networks:
   #python-libs:
 
 services:
-  vscode:
+  vscode-tunnel:
     user: code:src
     image: i8degrees/vscode-server:latest
     build:
       context: .
       dockerfile: "Dockerfile"
-    #command: code serve-web --host 0.0.0.0 --port 8020
+    command: ["tunnel"]
     restart: unless-stopped
-    container_name: vscode-server-1
+    container_name: vscode-tunnel-1
     volumes:
       - /etc/localtime:/etc/localtime:ro
+      #- /etc/ssl/certs:/etc/ssl/certs:ro
+      # NOTE(JEFF): This is a "bind mount" and is read just as port bindings 
+      # are: external path:container path. In this case, "./mounts/Projects"
+      # is a symbolic link one directory deep from this project root that 
+      # is linked inside the container at /home/code/Projects.
+      - "./mounts/Projects:/home/code/Projects:ro"
     env_file:
       ".env"
-      #".env.dist"
     networks:
       - proxy
     #expose:
@@ -30,7 +35,39 @@ services:
     ports:
       # code tunnel
       - "8010:8000/tcp"
-      # code serve-web --host 0.0.0.0 --port 80
+
+  vscode-web:
+    user: code:src
+    image: i8degrees/vscode-server:latest
+    build:
+      context: .
+      dockerfile: "Dockerfile"
+    command: ["serve-web", "--host", "0.0.0.0", "--port", "80"]
+    restart: unless-stopped
+    container_name: vscode-web-1
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      #- /etc/ssl/certs:/etc/ssl/certs:ro
+      # NOTE(JEFF): This is a "bind mount" and is read just as port bindings 
+      # are: external path:container path. In this case, "./mounts/Projects"
+      # is a symbolic link one directory deep from this project root that 
+      # is linked inside the container at /home/code/Projects.
+      - "./mounts/Projects:/home/code/Projects:ro"
+    env_file:
+      ".env"
+    networks:
+      - proxy
+    #expose:
+    # external port:container port
+    ports:
+      # NOTE(JEFF): The "command" service attribute specified above is what
+      # leads to the container setting up the web server at the configured
+      # port given (80).
+      # IMPORTANT(JEFF): The external binding port (left-most number) is what
+      # your host machine sees and thus is how you access the container. If 
+      # I were interested in port forwarding this service through a gateway 
+      # router -- to share with friends -- the internal IP and port would be:
+      # scorpio.home:8020 -> WAN_IP:80.
       - "8020:80/tcp"
 
 

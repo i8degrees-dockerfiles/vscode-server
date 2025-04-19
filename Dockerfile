@@ -21,6 +21,8 @@ WORKDIR /root
 # should be handled here if we wish for it to be permanent.
 COPY --chmod=+x --chown=root:root \
   ./build.sh /build.sh
+COPY --chmod=+x --chown=root:root \
+  ./run.sh /run.sh
 #COPY --chown=root:root bashrc ./.bashrc
 #COPY --chown=root:root bash_profile ./.bash_profile
 #COPY --chown=root:root bash_aliases ./.bash_aliases
@@ -39,12 +41,12 @@ RUN echo "INFO: Adding unprivileged user 'code:src' to container..." && \
 
 #EXPOSE 8000/tcp
 
+# NOTE(JEFF): This is insecure and should never be used
 #USER root
 #WORKDIR /root
 #ENTRYPOINT ["/usr/bin/code", "server", "--no-sandbox" ]
 
 USER code
 WORKDIR /home/code
-ENTRYPOINT ["/usr/bin/code", "tunnel" ]
-CMD ["/usr/bin/code", "serve-web" ]
+ENTRYPOINT ["/run.sh", "code" ]
 
