@@ -46,6 +46,7 @@ services:
       dockerfile: "Dockerfile"
     #"${VSCODE_EXTERNAL_CODE_WEB_PORT:-8020}"
     # TODO(JEFF): Append ${VSCODE_EXTERNAL_CODE_WEB_HOST} after --host element
+    # Issue URL: https://github.com/i8degrees-dockerfiles/vscode-server/issues/3
     command: [
       "serve-web",
       "--host",
