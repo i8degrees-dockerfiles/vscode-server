@@ -63,11 +63,18 @@ services:
       # NOTE(JEFF): The "command" service attribute specified above is what
       # leads to the container setting up the web server at the configured
       # port given (80).
+      #
       # IMPORTANT(JEFF): The external binding port (left-most number) is what
       # your host machine sees and thus is how you access the container. If 
       # I were interested in port forwarding this service through a gateway 
       # router -- to share with friends -- the internal IP and port would be:
       # scorpio.home:8020 -> WAN_IP:80.
+      #
+      # One last thing regarding your external port assignment: whichever port
+      # you pick must be unused (unbinded) by any other service, Docker or
+      # otherwise! You will see an error message telling you about this if you
+      # fail to select an unused port. You should typically try picking one
+      # that does not require elevated privileges -- unused port number > 1024.
       - "8020:80/tcp"
 
 
