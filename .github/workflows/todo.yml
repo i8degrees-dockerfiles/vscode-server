@@ -1,0 +1,67 @@
+# actions/todo-to-issue:jeff
+#
+# This is an experimental (for me) TODO.md -> Github Issue 
+# action that will trigger upon (at minimum), every commit 
+# push made to this repository.
+#
+# actions/checkout@v5 introduces additional features.
+# In particular, this action will attempt to sync all 
+# changes made, such as task completion, etc end to 
+# end. A GitHub issue reference will be added below 
+# each task entry (TODO.md). Other "surprises" are surely in 
+# store for us.
+# 
+# SEE ALSO:
+# 1. https://github.com/marketplace/actions/todo-to-issue
+#
+# IMPORTANT(JEFF): Note that if you set multiple triggers -- 
+# i.e. both pull_request and push -- this can result in 
+# duplicate issues.
+#
+---
+name: "Run TODO to Issue"
+on:
+  push:
+  # manual workflow operation for when you wish to act on existing 
+  # repository before this was put into operation. You will need
+  # to know the commit sha for the workflow to obtain the diff log.
+  workflow_dispatch:
+    inputs:
+      MANUAL_COMMIT_REF:
+        description: "The SHA of the commit to get the diff for"
+        required: true
+      MANUAL_BASE_REF:
+        description: "By default, the commit entered above is compared to the one directly before it; to go back further, enter an earlier SHA here"
+        required: false
+jobs:
+  build:
+    runs-on: "ubuntu-latest"
+    permissions:
+      contents: write
+      issues: write
+      pull-requests: write
+    steps:
+      - uses: "actions/checkout@v4"
+      - name: "TODO to Issue"
+        uses: "alstr/todo-to-issue-action@v5"
+        with:
+          CLOSE_ISSUES: "true"
+          INSERT_ISSUE_URLS: "true"
+        # manual workflow action
+        env:
+          MANUAL_COMMIT_REF: ${{ inputs.MANUAL_COMMIT_REF }}
+          MANUAL_BASE_REF: ${{ inputs.MANUAL_BASE_REF }}
+
+      - name: Set Git user
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+      - name: Commit and Push Changes
+        run: |
+          git add -A
+          if [[ `git status --porcelain` ]]; then
+            git commit -m "Automatically added GitHub issue links to TODOs"
+            git push origin main
+          else
+            echo "No changes to commit"
+          fi
