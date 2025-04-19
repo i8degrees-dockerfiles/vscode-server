@@ -20,10 +20,22 @@
 #
 ---
 name: "Run TODO to Issue"
-on: [ "push" ]
+on:
+  push:
+  # manual workflow operation for when you wish to act on existing 
+  # repository before this was put into operation. You will need
+  # to know the commit sha for the workflow to obtain the diff log.
+  workflow_dispatch:
+    inputs:
+      MANUAL_COMMIT_REF:
+        description: "The SHA of the commit to get the diff for"
+        required: true
+      MANUAL_BASE_REF:
+        description: "By default, the commit entered above is compared to the one directly before it; to go back further, enter an earlier SHA here"
+        required: false
 jobs:
   build:
-    runs-on: "debian-latest"
+    runs-on: "ubuntu-latest"
     permissions:
       contents: write
       issues: write
@@ -35,6 +47,11 @@ jobs:
         with:
           CLOSE_ISSUES: "true"
           INSERT_ISSUE_URLS: "true"
+        # manual workflow action
+        env:
+          MANUAL_COMMIT_REF: ${{ inputs.MANUAL_COMMIT_REF }}
+          MANUAL_BASE_REF: ${{ inputs.MANUAL_BASE_REF }}
+
       - name: Set Git user
         run: |
           git config --global user.name "github-actions[bot]"
