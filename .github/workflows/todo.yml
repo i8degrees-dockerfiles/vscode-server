@@ -56,12 +56,16 @@ jobs:
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
+      
       - name: Commit and Push Changes
         run: |
           git add -A
           if [[ `git status --porcelain` ]]; then
             git commit -m "Automatically added GitHub issue links to TODOs"
-            git push origin main
+            # IMPORTANT(JEFF): Do remember to change the origin branch to the correct 
+            # default branch. The default nowadays is "main" whereas I continue to use 
+            # the previous default of "master".
+            git push origin master
           else
             echo "No changes to commit"
           fi
