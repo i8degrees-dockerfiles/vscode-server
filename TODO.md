@@ -8,8 +8,11 @@ for letting us use the `command` syntax inside of
 `compose.yml` services along side a sane default 
 entrypoint. I believe it has something to do with
 
-- [x] determine if we need to run `code serve-web` or `code tunnel` or even
-both? shall we do so in two separate containers?
+- [ ] determine if we need to run `code serve-web` or `code tunnel` or even
+both? shall we do so in two separate containers? Additional testing as of
+the previous commit makes me believe that we may have to NOT separate the
+two. I must investigate how the authentication varies and is tied together
+between these two entrypoints.
 
 - [ ] register a couple subdomains of scorio.home in our auth DNS. This is
 for my own convenience for quickly remembering where our tunnel and web UI
